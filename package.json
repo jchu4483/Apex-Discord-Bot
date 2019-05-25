@@ -1,0 +1,19 @@
+{
+  "name": "ApexBot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "discord": "^0.8.2",
+    "discord.js": "^11.5.0",
+    "dotenv": "^8.0.0",
+    "js": "^0.1.0"
+  }
+}
