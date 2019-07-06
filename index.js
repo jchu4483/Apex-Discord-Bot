@@ -37,8 +37,7 @@ function showMostRecentStats(res, msg, playerName) {
 		legend.stats.forEach((legendStat) => {
 			for (var stat in legendStat) {
 				if (legendStat.hasOwnProperty(stat)) {
-					embed.addField(`Hero`, `${legend.name}`, true)
-					embed.addField(`${stat}`, `${legendStat[stat]}`, true);
+					embed.addField(`${legend.name} - ${stat}`, `${legendStat[stat]}`, true);
 					embed.setColor('#f50057');
 					embed.setDescription(`Here are the stats for ${playerName}`)
 				}
