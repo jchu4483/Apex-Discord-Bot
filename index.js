@@ -12,7 +12,7 @@ client.on('message', (msg) => {
 	if (msg.content.includes('!apexbot')) {
 		const playerName = msg.content.split(" ")[1] || null;
 		if (playerName) {
-			axios.get(`https://www.apexlegendsapi.com/api/v1/player?platform=pc&name=${playerName}`, {
+			axios.get(`https://www.apexlegendsapi.com/api/v2/player?platform=pc&name=${playerName}`, {
 						headers: {
 							'Authorization': process.env.APEX_API_TOKEN
 						}
