@@ -4,34 +4,10 @@ require('dotenv').config();
 
 const client = new Discord.Client();
 
-
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-});
-
-client.on('message', (msg) => {
-  if (msg.content.includes('!apexbot')) {
-    const playerName = msg.content.split(' ')[1] || null;
-    if (playerName) {
-      axios.get(`https://www.apexlegendsapi.com/api/v2/player?platform=pc&name=${playerName}`, {
-        headers: {
-          Authorization: process.env.APEX_API_TOKEN,
-        },
-      })
-        .then((res) => {
-          if (res.status === 200) {
-            showMostRecentStats(res, msg, playerName);
-          }
-        })
-        .catch((error) => {
-          console.log(error.response);
-        });
-    }
-  }
-});
-
 function showMostRecentStats(res, msg, playerName) {
-  const { legends } = res.data;
+  const {
+    legends,
+  } = res.data;
   const embed = new Discord.RichEmbed();
 
   legends.forEach((legend, i) => {
@@ -47,5 +23,35 @@ function showMostRecentStats(res, msg, playerName) {
   });
   msg.channel.send(embed);
 }
+
+async function makeAPICall(playerName, msg) {
+  try {
+    await axios.get(`https://www.apexlegendsapi.com/api/v2/player?platform=pc&name=${playerName}`, {
+      headers: {
+        Authorization: process.env.APEX_API_TOKEN,
+      },
+    })
+      .then((res) => {
+        if (res.status === 200) {
+          showMostRecentStats(res, msg, playerName);
+        }
+      });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+client.on('ready', () => {
+  console.log(`Logged in as ${client.user.tag}!`);
+});
+
+client.on('message', (msg) => {
+  if (msg.content.includes('!apexbot')) {
+    const playerName = msg.content.split(' ')[1] || null;
+    if (playerName) {
+      makeAPICall(playerName, msg);
+    }
+  }
+});
 
 client.login(process.env.DISCORD_TOKEN);
